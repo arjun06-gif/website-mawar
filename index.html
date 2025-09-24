@@ -153,12 +153,10 @@
     </section>
 
     <section>
-      <h2>Pesan Dariku</h2>
-      <div class="message">
-        Ayanggg Mawar tersayang, <br><br>
-        aku cuma mau bilang, aku mencintaimuuuu. <br><br>
-        Terima kasih ya sudah selalu ada di sisiku. Aku berjanji akan terus menyayangimu hari ini, besok, dan selamanya. ❤️
-        Semoga kita selalu bersamaa❤️❤️❤️❤️.
+  <h2>Pesan Dariku</h2>
+  <div class="message" id="typedMessage"></div>
+</section>
+
       </div>
     </section>
 
@@ -282,5 +280,28 @@
       setTimeout(()=>{ heart.remove(); },5000);
     }
   </script>
+  // === Typing Effect Pesan ===
+const textMessage = `Ayanggg Mawar tersayang, 
+
+aku cuma mau bilang, aku mencintaimuuuu. 
+
+Terima kasih ya sudah selalu ada di sisiku. Aku berjanji akan terus menyayangimu hari ini, besok, dan selamanya. ❤️
+Semoga kita selalu bersamaa❤️❤️❤️❤️.`;
+
+let index = 0;
+const speed = 50; // kecepatan ketik (ms per huruf)
+
+function typeMessage() {
+  if (index < textMessage.length) {
+    const char = textMessage[index] === "\n" ? "<br>" : textMessage[index];
+    document.getElementById("typedMessage").innerHTML += char;
+    index++;
+    setTimeout(typeMessage, speed);
+  }
+}
+
+// mulai ngetik setelah halaman dimuat
+window.addEventListener("load", typeMessage);
+
 </body>
 </html>
