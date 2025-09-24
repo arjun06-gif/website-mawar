@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Website Mawar</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #ffe6f0, #ffc2d1, #ffb3c6);
+      background-size: 400% 400%;
+      animation: bgGradient 12s ease infinite;
+      margin: 0; padding: 0; color: #333;
+      overflow-x: hidden;
+    }
+    @keyframes bgGradient {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    header {
+      background: rgba(255, 179, 193, 0.9);
+      padding: 40px 20px; text-align: center;
+      color: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    header h1 { margin: 0; font-size: 42px; }
+    header p { margin-top: 10px; font-size: 18px; }
+
+    main {
+      padding: 40px 20px;
+      max-width: 1000px; margin: auto;
+      background: rgba(255, 240, 243, 0.8);
+      border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    h2 { color: #e63946; border-bottom: 2px solid #ffccd5; display: inline-block; margin-bottom: 20px; }
+
+    /* Galeri */
+    .gallery-container { overflow: hidden; width: 100%; position: relative; }
+    .gallery { display: flex; gap: 20px; animation: scrollGallery 40s linear infinite; animation-play-state: running; }
+    .gallery img {
+      border-radius: 10px; height: 300px; width: auto; flex-shrink: 0;
+      cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform 0.3s;
+    }
+    .gallery img:hover { transform: scale(1.05); }
+    @keyframes scrollGallery { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+
+    /* Panah */
+    .gallery-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      font-size: 40px; color: #e63946; cursor: pointer; user-select: none;
+      padding: 10px; background: rgba(255,255,255,0.7);
+      border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: background 0.3s; z-index: 10;
+    }
+    .gallery-nav:hover { background: rgba(255,200,200,0.9); }
+    .gallery-prev { left: 10px; }
+    .gallery-next { right: 10px; }
+
+    /* Indikator titik */
+    .gallery-indicators { text-align: center; margin-top: 15px; }
+    .gallery-indicators span {
+      font-size: 22px; margin: 0 5px; color: #bbb; cursor: pointer; transition: color 0.3s;
+    }
+    .gallery-indicators span.active { color: #e63946; }
+
+    /* Lightbox */
+    .lightbox {
+      display: none; position: fixed; z-index: 10001;
+      left: 0; top: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9); align-items: center; justify-content: center;
+    }
+    .lightbox img { max-width: 90%; max-height: 90%; border-radius: 10px; }
+    .lightbox .close, .lightbox .nav {
+      position: absolute; color: #fff; font-size: 36px; cursor: pointer; user-select: none;
+    }
+    .lightbox .close { top: 20px; right: 30px; }
+    .lightbox .prev { left: 20px; top: 50%; font-size: 40px; }
+    .lightbox .next { right: 20px; top: 50%; font-size: 40px; }
+
+    footer {
+      text-align: center; padding: 20px;
+      background: rgba(255, 179, 193, 0.9); color: #fff;
+      margin-top: 40px; border-radius: 0 0 15px 15px;
+      box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+    }
+
+    /* Hujan love */
+    .rain-heart { position: fixed; top: -10px; color: #ff4d6d; animation: fall linear forwards; z-index: 999; pointer-events: none; }
+    @keyframes fall { 0%{transform:translateY(0) rotate(0deg);opacity:1;} 100%{transform:translateY(100vh) rotate(360deg);opacity:0;} }
+
+    /* Tombol WhatsApp */
+    .whatsapp-btn {
+      position: fixed; bottom: 20px; right: 20px;
+      padding: 12px 20px; background: #25d366; color: #fff; font-size: 18px;
+      border-radius: 50px; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: background 0.3s, transform 0.2s; z-index: 10002; animation: pulse 2s infinite;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .whatsapp-btn:hover { background: #1ebe5d; transform: scale(1.1); }
+    @keyframes pulse { 0%{transform:scale(1);} 50%{transform:scale(1.1);} 100%{transform:scale(1);} }
+
+    /* Popup musik */
+    .music-popup {
+      position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+      background: rgba(255,77,109,0.95); color: #fff; padding: 10px 20px;
+      border-radius: 8px; font-size: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      z-index: 10003; animation: fadeInOut 5s forwards;
+    }
+    @keyframes fadeInOut { 0%{opacity:0;top:0;} 10%{opacity:1;top:20px;} 80%{opacity:1;top:20px;} 100%{opacity:0;top:0;} }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Hai Sayangku ❤️</h1>
+    <p>Website ini aku buat khusus untukmu, Maaf ya kalau sederhana soalnya aku kan bukan anak IT hehe.</p>
+  </header>
+
+  <main>
+    <section><img src="mawar.jpg" alt="Foto Mawar" width="400"></section>
+
+    <section>
+      <h2>Lagu Kita</h2>
+      <audio id="bgMusic" preload="auto" loop src="lagu.mp3"></audio>
+      <div class="music-control">
+        <button class="music-btn" onclick="toggleMusic()">❤️ ⏸ Pause Lagu</button>
+      </div>
+    </section>
+
+    <section style="position: relative;">
+      <h2>Galeri Kenangan</h2>
+      <div class="gallery-container">
+        <div class="gallery" id="gallery">
+          <img src="kenangan1.jpg" alt="Kenangan 1">
+          <img src="kenangan2.jpg" alt="Kenangan 2">
+          <img src="kenangan3.jpg" alt="Kenangan 3">
+          <img src="kenangan4.jpg" alt="Kenangan 4">
+          <img src="kenangan5.jpg" alt="Kenangan 5">
+          <img src="kenangan6.jpg" alt="Kenangan 6">
+          <img src="kenangan7.jpg" alt="Kenangan 7">
+          <!-- duplikasi untuk animasi loop -->
+          <img src="kenangan1.jpg" alt="Kenangan 1">
+          <img src="kenangan2.jpg" alt="Kenangan 2">
+          <img src="kenangan3.jpg" alt="Kenangan 3">
+          <img src="kenangan4.jpg" alt="Kenangan 4">
+          <img src="kenangan5.jpg" alt="Kenangan 5">
+          <img src="kenangan6.jpg" alt="Kenangan 6">
+          <img src="kenangan7.jpg" alt="Kenangan 7">
+        </div>
+      </div>
+      <span class="gallery-nav gallery-prev" onclick="scrollGalleryManual(-1)">❮</span>
+      <span class="gallery-nav gallery-next" onclick="scrollGalleryManual(1)">❯</span>
+      <div class="gallery-indicators" id="galleryIndicators"></div>
+    </section>
+
+    <section>
+      <h2>Pesan Dariku</h2>
+      <div class="message">
+        Ayanggg Mawar tersayang, <br><br>
+        aku cuma mau bilang, aku mencintaimuuuu. <br><br>
+        Terima kasih ya sudah selalu ada di sisiku. Aku berjanji akan terus menyayangimu hari ini, besok, dan selamanya. ❤️
+        Semoga kita selalu bersamaa❤️❤️❤️❤️.
+      </div>
+    </section>
+
+    <section>
+      <h2>Ingatt gaa ❤️❤️❤️❤️</h2>
+      <div class="timeline">
+        <div class="event"><h3>Pertemuan difore</h3><p>Hari itu aku masih ingat jelas bagaimana senyummu membuat hatiku berdebar untuk pertama kalinya.</p></div>
+        <div class="event"><h3>Nonton Bareng</h3><p>inge ga aku bawa buket coklat hehe, lalu aku menyatakan cinta.</p></div>
+        <div class="event"><h3>Anniversary Pertama</h3><p>Satu tahun penuh cinta, perjuangan, dan kebahagiaan yang kita jalani bersama.</p></div>
+        <div class="event"><h3>Momen Tak Terlupakan</h3><p>Setiap detik bersamamu selalu jadi kenangan indah yang tak ternilai.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>Dibuat dengan penuh cinta oleh Arjun 💕</footer>
+
+  <a class="whatsapp-btn" href="https://wa.me/6289507960774" target="_blank">
+    <span class="whatsapp-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></span>
+    Chat Aku di WhatsApp
+  </a>
+
+  <div id="lightbox" class="lightbox">
+    <span class="close" onclick="closeLightbox()">✖</span>
+    <span class="nav prev" onclick="changePhoto(-1)">❮</span>
+    <img id="lightbox-img" src="" alt="Preview Foto">
+    <span class="nav next" onclick="changePhoto(1)">❯</span>
+  </div>
+
+  <script>
+    // === Musik ===
+    const bgMusic = document.getElementById('bgMusic');
+    function toggleMusic() {
+      if (bgMusic.paused) {
+        bgMusic.play();
+        document.querySelector(".music-btn").innerHTML = "❤️ ⏸ Pause Lagu";
+      } else {
+        bgMusic.pause();
+        document.querySelector(".music-btn").innerHTML = "❤️ ▶️ Putar Lagu";
+      }
+    }
+    function showMusicPopup(){
+      const popup = document.createElement('div');
+      popup.classList.add('music-popup');
+      popup.textContent = "👉 Klik layar untuk memutar musik";
+      document.body.appendChild(popup);
+      setTimeout(()=>{ popup.remove(); },5000);
+    }
+    showMusicPopup();
+    window.addEventListener('click', (e) => {
+      if (e.target.closest(".music-btn")) return;
+      if (bgMusic.paused) bgMusic.play();
+    });
+
+    // === Galeri ===
+    const gallery = document.getElementById("gallery");
+    const indicatorsContainer = document.getElementById("galleryIndicators");
+    let currentSlide = 0, resumeTimeout;
+
+    for (let i = 0; i < 7; i++) {
+      const dot = document.createElement("span");
+      dot.textContent = "●";
+      dot.addEventListener("click", () => scrollGalleryManual(i - currentSlide));
+      indicatorsContainer.appendChild(dot);
+    }
+    const dots = indicatorsContainer.querySelectorAll("span");
+    function updateIndicators() {
+      dots.forEach((dot, i) => dot.classList.toggle("active", i === currentSlide));
+    }
+    updateIndicators();
+
+    function scrollGalleryManual(direction) {
+      currentSlide += direction;
+      if (currentSlide < 0) currentSlide = 6;
+      if (currentSlide > 6) currentSlide = 0;
+      updateIndicators();
+      gallery.style.animationPlayState = "paused";
+      clearTimeout(resumeTimeout);
+      resumeTimeout = setTimeout(() => { gallery.style.animationPlayState = "running"; }, 5000);
+    }
+
+    // Swipe HP
+    let startX = 0, isDown = false;
+    gallery.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX; isDown = true;
+      gallery.style.animationPlayState = "paused"; clearTimeout(resumeTimeout);
+    });
+    gallery.addEventListener("touchend", (e) => {
+      if (!isDown) return;
+      let endX = e.changedTouches[0].clientX, diffX = endX - startX;
+      if (Math.abs(diffX) > 50) { if (diffX > 0) scrollGalleryManual(-1); else scrollGalleryManual(1); }
+      isDown = false; resumeTimeout = setTimeout(() => { gallery.style.animationPlayState = "running"; }, 5000);
+    });
+
+    setInterval(() => {
+      if (gallery.style.animationPlayState === "running") {
+        currentSlide = (currentSlide + 1) % 7; updateIndicators();
+      }
+    }, 5000);
+
+    // === Lightbox ===
+    const galleryImages = document.querySelectorAll('.gallery img');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    let currentIndex = 0;
+    galleryImages.forEach((img, index) => {
+      img.addEventListener('click', () => { currentIndex = index % 7; openLightbox(); });
+    });
+    function openLightbox(){ lightbox.style.display = 'flex'; lightboxImg.src = galleryImages[currentIndex].src; }
+    function changePhoto(direction){ currentIndex += direction; if(currentIndex < 0) currentIndex = 6; if(currentIndex > 6) currentIndex = 0; lightboxImg.src = galleryImages[currentIndex].src; }
+    function closeLightbox(){ lightbox.style.display = 'none'; }
+
+    // === Hujan Love ===
+    setInterval(()=>{ createFallingHeart(); }, 300);
+    function createFallingHeart(){
+      const heart = document.createElement('div');
+      heart.classList.add('rain-heart'); heart.textContent = '❤';
+      heart.style.left = Math.random()*100 + 'vw';
+      heart.style.fontSize = Math.random()*30 + 10 + 'px';
+      heart.style.animationDuration = (Math.random()*3 + 2) + 's';
+      document.body.appendChild(heart);
+      setTimeout(()=>{ heart.remove(); },5000);
+    }
+  </script>
+</body>
+</html>
